@@ -353,22 +353,24 @@ significantly vary in density. We will also revisit this later in multivariate
 analysis with quality.
 
 The following plots explore the correlation among quality and the above 
-features. 
+features. This does not imply that only these variables will be explored.
+Instead, these are just some initial exploration on some interesting 
+observations.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,total.acid,group=quality)) + 
   geom_boxplot() +
   stat_summary(fun.y = mean,geom='point',shape=4)
 
-install.packages('psych')
-library(psych)
-
+tapply(wine$total.acid,wine$quality,summary)
 ```
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,density,group=quality)) + 
   geom_boxplot() +
   stat_summary(fun.y = mean,geom='point',shape=4)
+
+tapply(wine$density,wine$quality,summary)
 ```
 
 
@@ -376,12 +378,16 @@ ggplot(wine,aes(quality,density,group=quality)) +
 ggplot(wine,aes(quality,alcohol,group=quality)) + 
   geom_boxplot() +
   stat_summary(fun.y = mean,geom='point',shape=4)
+
+tapply(wine$alcohol,wine$quality,summary)
 ```
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,pH,group=quality)) + 
   geom_boxplot() +
   stat_summary(fun.y = mean,geom='point',shape=4)
+
+tapply(wine$pH,wine$quality,summary)
 ```
 
 
