@@ -1,0 +1,389 @@
+Red Wine Quality Exploratory Data Analysis by Lam Raga A. Markely
+========================================================
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+# Load all of the packages that you end up using in your analysis in this code
+# chunk.
+
+# Notice that the parameter "echo" was set to FALSE for this code chunk. This
+# prevents the code from displaying in the knitted HTML output. You should set
+# echo=FALSE for all code chunks in your file, unless it makes sense for your
+# report to show the code that generated a particular plot.
+
+# The other parameters for "message" and "warning" should also be set to FALSE
+# for other code chunks once you have verified that each plot comes out as you
+# want it to. This will clean up the flow of your report.
+
+library(ggplot2)
+library(dplyr)
+```
+
+```{r echo=FALSE, Load_the_Data}
+# Load the Data
+wine = read.csv('wineQualityReds.csv')
+```
+
+This dataset contains information about various red wine samples with their 
+chemical properties and quality. The goal of the analysis is to identify which 
+chemical properties influence the quality of red wines.
+
+# Univariate Plots Section
+
+```{r echo=FALSE, Univariate_Plots}
+dim(wine)
+str(wine)
+summary(wine)
+```
+
+The red wine dataset consists of 12 features, including 11 input variables 
+(fixed.acidity to alcohol), 1 output variable (quality), and 1599 samples. 
+The feature X is the index of the dataset. 
+The definition of the variables are described in detail 
+[here](https://s3.amazonaws.com/udacity-hosted-downloads/ud651/wineQualityInfo.txt).
+In the following analysis, the variable fixed acidity will be referred as
+tartaric acid, volatile acidity as acetic acid, chlorides as sodium chloride,
+and sulphates as potassium sulphate as described in the above link. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality)) +
+  geom_histogram(binwidth=1,color='white') +
+  scale_x_continuous(breaks=seq(3,8,1)) +
+  xlab('Quality') +
+  ylab('Count')
+
+summary(wine$quality)
+```
+
+Most of the wine samples have quality 5 and 6. 
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(fixed.acidity)) +
+  geom_histogram(color='white',binwidth=1) +
+  scale_x_continuous(breaks=seq(4,16,1)) +
+  xlab('Tartaric Acid (g/L)') +
+  ylab('Count')
+
+summary(wine$fixed.acidity)
+
+```
+
+The tartaric acid concentration distribution is slightly skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(volatile.acidity)) +
+  geom_histogram(color='white',binwidth=0.1) +
+  scale_x_continuous(breaks=seq(0.1,1.6,0.1)) +
+  xlab('Acetic Acid (g/L)') +
+  ylab('Count')
+
+summary(wine$volatile.acidity)
+```
+
+The acetic acid concentration distribution is slightly skewed to the right.
+The summary statistics are provided above.
+
+```{r echo = FALSE}
+ggplot(wine,aes(citric.acid)) +
+  geom_histogram(color='white',binwidth=0.05) +
+  scale_x_continuous(breaks=seq(0,1.0,0.1)) +
+  xlab('Citric Acid (g/L)') +
+  ylab('Count')
+
+summary(wine$citric.acid)
+```
+
+The citric acid concentration distribution is very skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(residual.sugar)) +
+  geom_histogram(color='white',binwidth=0.5) +
+  scale_x_continuous(breaks=seq(0,16,1)) +
+  xlab('Residual Sugar (g/L)') +
+  ylab('Count')
+
+summary(wine$residual.sugar)
+```
+
+The residual sugar concentration distribution is skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(chlorides)) +
+  geom_histogram(color='white',binwidth=0.02) +
+  scale_x_continuous(breaks=seq(0,0.7,0.05)) +
+  xlab('Sodium Chloride (g/L)') +
+  ylab('Count')
+
+summary(wine$chlorides)
+```
+
+The sodium chloride concentration distribution is skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(free.sulfur.dioxide)) +
+  geom_histogram(color='white',binwidth=2) +
+  scale_x_continuous(breaks=seq(0,80,5)) +
+  xlab('Free Sulfur Dioxide (mg/L)') +
+  ylab('Count')
+
+summary(wine$free.sulfur.dioxide)
+```
+
+The wine sodium chloride concentration distribution is skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(total.sulfur.dioxide)) +
+  geom_histogram(color='white',binwidth=5) +
+  scale_x_continuous(breaks=seq(0,300,25)) +
+  xlab('Total Sulfur Dioxide (mg/L)') +
+  ylab('Count')
+
+summary(wine$total.sulfur.dioxide)
+```
+
+The total sulfur dioxide concentration distribution is skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(density)) +
+  geom_histogram(color='white',binwidth=0.001) +
+  scale_x_continuous(breaks=seq(0.99,1.1,0.001)) +
+  xlab('Density (g/mL)') +
+  ylab('Count')
+
+summary(wine$total.sulfur.dioxide)
+```
+
+The density distribution is close to normal distribution. 
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(pH)) +
+  geom_histogram(color='white',binwidth=0.04) +
+  scale_x_continuous(breaks=seq(2.740,4.010,0.1)) +
+  xlab('pH') +
+  ylab('Count')
+
+summary(wine$pH)
+```
+
+The pH distribution is close to normal distribution.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(sulphates)) +
+  geom_histogram(color='white',binwidth=0.1) +
+  scale_x_continuous(breaks=seq(0.3,2.00,0.1)) +
+  xlab('Potassium Sulphate (g/L)') +
+  ylab('Count')
+
+summary(wine$sulphates)
+```
+
+The potassium sulphate concentration distribution is skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+ggplot(wine,aes(alcohol)) +
+  geom_histogram(color='white',binwidth=0.1) +
+  scale_x_continuous(breaks=seq(8.40,14.90,1)) +
+  xlab('Alcohol (%)') +
+  ylab('Count')
+
+summary(wine$alcohol)
+```
+
+The % alcohol distribution is very skewed to the right.
+The summary statistics are provided above.
+
+```{r echo=FALSE}
+wine$total.acid <- wine$fixed.acidity + wine$volatile.acidity + wine$citric.acid
+
+ggplot(wine,aes(total.acid)) +
+  geom_histogram(color='white',binwidth=0.5) +
+  scale_x_continuous(breaks=seq(0,22,1)) +
+  xlab('Total Acid (g/L)') +
+  ylab('Count')
+
+summary(wine$total.acid)
+```
+
+Total acid is a new feature calculated from the sum of tartaric acid, 
+acetic acid, and citric acid, concentration. The total salt distribution is 
+skewed to the right. The summary statistics are provided above.
+
+```{r echo=FALSE}
+wine$total.salt <- wine$sulphates + wine$chlorides
+
+ggplot(wine,aes(total.salt)) +
+  geom_histogram(color='white',binwidth=0.1) +
+  scale_x_continuous(breaks=seq(0.3,3,0.1)) +
+  xlab('Total Salt (g/L)') +
+  ylab('Count')
+
+summary(wine$total.salt)
+```
+
+Total salt is a new feature calculated from the sum of sodium chloride and 
+potassium sulphate concentration. The total salt distribution is skewed to the 
+right. The summary statistics are provided above.
+
+
+```{r echo=FALSE}
+wine$dioxide.ratio <- wine$free.sulfur.dioxide/wine$total.sulfur.dioxide
+
+ggplot(wine,aes(dioxide.ratio)) +
+  #geom_histogram(color='white') +
+  geom_histogram(color='white',binwidth=0.02) +
+  #scale_x_continuous() +
+  scale_x_continuous(breaks=seq(0,1,0.05)) +
+  xlab('Dioxide Ratio') +
+  ylab('Count')
+
+summary(wine$dioxide.ratio)
+```
+
+Dioxide ratio is a new feature calculated from dividing free sulfur dioxide by 
+total sulfur dioxide concentration. The ratio distribution is close to normal, 
+except that there are large number of samples with ratio ~0.23-0.25. 
+The summary statistics are provided above.
+
+# Univariate Analysis
+
+### What is the structure of your dataset?
+There are 1599 wine samples with 11 features: tartaric acid concentration,
+acetic acid concentration, citric acid concentration, residual sugar 
+concentration, sodium chloride concentration, free sulfur dioxide concentration,
+total sulfur dioxide concentration, density, pH, potassium sulphate 
+concentration, % alcohol, and quality. All of the features are continuous 
+variables. Some of the feature distributions are close to normal, while others 
+are skewed to the right. The wine quality is a score between 0 and 10. 
+
+### What is/are the main feature(s) of interest in your dataset?
+The feature of interest is the quality of the wine. This analysis aims to 
+investigate which of the other features influence the quality.
+
+### What other features in the dataset do you think will help support your \
+investigation into your feature(s) of interest?
+All the features are related with the chemical composition, chemical property,
+and physical property of the wine sample. So, I suspect each feature will have
+some influence on the quality, although some features may have more influence
+than the others.
+
+### Did you create any new variables from existing variables in the dataset?
+There are 3 new variables created:
+1. Total acid concentration: tartaric acid + acetic acid + citric acid 
+concentration
+2. Total salt concentration: sodium chloride concentration + potassium sulphate
+concentration
+3. Dioxide ratio: free sulfur dioxide concentration/total sulfur dioxide
+concentration
+
+### Of the features you investigated, were there any unusual distributions? \
+Did you perform any operations on the data to tidy, adjust, or change the form \
+of the data? If so, why did you do this?
+No, there is no unusual distribution.
+
+# Bivariate Plots Section
+
+> **Tip**: Based on what you saw in the univariate plots, what relationships
+between variables might be interesting to look at in this section? Don't limit
+yourself to relationships between a main output feature and one of the
+supporting variables. Try to look at relationships between supporting variables
+as well.
+
+```{r echo=FALSE, Bivariate_Plots}
+
+```
+
+# Bivariate Analysis
+
+> **Tip**: As before, summarize what you found in your bivariate explorations
+here. Use the questions below to guide your discussion.
+
+### Talk about some of the relationships you observed in this part of the \
+investigation. How did the feature(s) of interest vary with other features in \
+the dataset?
+
+### Did you observe any interesting relationships between the other features \
+(not the main feature(s) of interest)?
+
+### What was the strongest relationship you found?
+
+
+# Multivariate Plots Section
+
+> **Tip**: Now it's time to put everything together. Based on what you found in
+the bivariate plots section, create a few multivariate plots to investigate
+more complex interactions between variables. Make sure that the plots that you
+create here are justified by the plots you explored in the previous section. If
+you plan on creating any mathematical models, this is the section where you
+will do that.
+
+```{r echo=FALSE, Multivariate_Plots}
+
+```
+
+# Multivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the \
+investigation. Were there features that strengthened each other in terms of \
+looking at your feature(s) of interest?
+
+### Were there any interesting or surprising interactions between features?
+
+### OPTIONAL: Did you create any models with your dataset? Discuss the \
+strengths and limitations of your model.
+
+------
+
+# Final Plots and Summary
+
+> **Tip**: You've done a lot of exploration and have built up an understanding
+of the structure of and relationships between the variables in your dataset.
+Here, you will select three plots from all of your previous exploration to
+present here as a summary of some of your most interesting findings. Make sure
+that you have refined your selected plots for good titling, axis labels (with
+units), and good aesthetic choices (e.g. color, transparency). After each plot,
+make sure you justify why you chose each plot by describing what it shows.
+
+### Plot One
+```{r echo=FALSE, Plot_One}
+
+```
+
+### Description One
+
+
+### Plot Two
+```{r echo=FALSE, Plot_Two}
+
+```
+
+### Description Two
+
+
+### Plot Three
+```{r echo=FALSE, Plot_Three}
+
+```
+
+### Description Three
+
+------
+
+# Reflection
+
+> **Tip**: Here's the final step! Reflect on the exploration you performed and
+the insights you found. What were some of the struggles that you went through?
+What went well? What was surprising? Make sure you include an insight into
+future work that could be done with the dataset.
+
+> **Tip**: Don't forget to remove this, and the other **Tip** sections before
+saving your final work and knitting the final report!
