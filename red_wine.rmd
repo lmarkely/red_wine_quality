@@ -244,7 +244,7 @@ ggplot(wine,aes(dioxide.ratio)) +
   geom_histogram(color='white',binwidth=0.02) +
   #scale_x_continuous() +
   scale_x_continuous(breaks=seq(0,1,0.05)) +
-  xlab('Dioxide Ratio') +
+  xlab('Sulfur Dioxide Ratio') +
   ylab('Count')
 
 summary(wine$dioxide.ratio)
@@ -352,68 +352,222 @@ The above plot shows that some samples with the same %alcohol seem to
 significantly vary in density. We will also revisit this later in multivariate 
 analysis with quality.
 
-The following plots explore the correlation among quality and the above 
-features. This does not imply that only these variables will be explored.
-Instead, these are just some initial exploration on some interesting 
-observations.
+The following plots explore the correlation among quality and the other 
+features. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,fixed.acidity,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Tartaric Acid (g/L)')
+
+tapply(wine$fixed.acidity,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and tartaric acid concentration.
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,volatile.acidity,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Acetic Acid (g/L)') 
+
+tapply(wine$volatile.acidity,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there may be a strong negative
+correlation between the quality and acetic acid concentration.
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,citric.acid,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Citric Acid (g/L)') 
+
+tapply(wine$citric.acid,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there may be a strong positive
+correlation between the quality and citric acid concentration.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,total.acid,group=quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4)
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Total Acid (g/L)') 
 
 tapply(wine$total.acid,wine$quality,summary)
 ```
 
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and total acid concentration. This is not surprising since
+quality seems to be positively correlated with citric acid concentration, 
+negatively correlated with acetic acid concentration, and not correlated with
+tartaric acid concentration. So, the total acid concentration may not be 
+correlated with the quality.
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,residual.sugar,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Residual Sugar (g/L)') 
+
+tapply(wine$residual.sugar,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and residual sugar concentration. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,chlorides,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Sodium Chloride (g/L)') 
+
+tapply(wine$chlorides,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and sodium chloride concentration. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,free.sulfur.dioxide,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Free Sulfur Dioxide (mg/L)') 
+
+tapply(wine$free.sulfur.dioxide,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and free sulfur dioxide concentration. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,total.sulfur.dioxide,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Total Sulfur Dioxide (mg/L)') 
+
+tapply(wine$total.sulfur.dioxide,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and total sulfur dioxide concentration. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,dioxide.ratio,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Sulfur Dioxide Ratio') 
+
+tapply(wine$dioxide.ratio,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and the created sulfur dioxide ratio feature. 
+
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,density,group=quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4)
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Density (g/L)') 
 
 tapply(wine$density,wine$quality,summary)
 ```
 
+The boxplot and summary statistics suggest that there may be some correlation 
+between the quality and density - the lower the density, the higher the quality.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,alcohol,group=quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4)
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Alcohol (%)') 
 
 tapply(wine$alcohol,wine$quality,summary)
 ```
 
+The boxplot and summary statistics suggest that there may be some positive 
+correlation between the quality and %alcohol.
+
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,pH,group=quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4)
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('pH') 
 
 tapply(wine$pH,wine$quality,summary)
 ```
 
+The boxplot and summary statistics suggest that there is no strong correlation 
+between the quality and total acid concentration.
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,sulphates,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Potassium Sulphate (g/L)') 
+
+tapply(wine$sulphates,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there may be some positive 
+correlation between the quality and potassium sulphate concentration.
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,total.salt,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Total Salt (g/L)') 
+
+tapply(wine$total.salt,wine$quality,summary)
+```
+
+The boxplot and summary statistics suggest that there may be some positive 
+correlation between the quality and total salt concentration.
 
 # Bivariate Analysis
-
-> **Tip**: As before, summarize what you found in your bivariate explorations
-here. Use the questions below to guide your discussion.
 
 ### Talk about some of the relationships you observed in this part of the \
 investigation. How did the feature(s) of interest vary with other features in \
 the dataset?
 
+Quality seems to have positive correlation with citric acid concentration, 
+%alcohol, and potassium sulphate concentration. 
+It may also have negative correlation with acetic acid concentration and 
+density. These correlations are not obtained by varying one variable while 
+keeping the other variables constant. So, this is not a 1:1 correlation. 
+However, it will be interesting to bring the insight from this bivariate 
+analysis in the multivariate analysis.
+
 ### Did you observe any interesting relationships between the other features \
 (not the main feature(s) of interest)?
 
+Total acid concentration is positively correlated with density and negatively
+correlated with pH.
+
 ### What was the strongest relationship you found?
 
+The two correlations between total acid concentration and density as well as
+total acid concentration and pH seem to be equally strong. They are the most
+obvious correlation observed.
 
 # Multivariate Plots Section
-
-> **Tip**: Now it's time to put everything together. Based on what you found in
-the bivariate plots section, create a few multivariate plots to investigate
-more complex interactions between variables. Make sure that the plots that you
-create here are justified by the plots you explored in the previous section. If
-you plan on creating any mathematical models, this is the section where you
-will do that.
 
 ```{r echo=FALSE, Multivariate_Plots}
 
