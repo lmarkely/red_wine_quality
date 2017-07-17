@@ -19,6 +19,7 @@ library(corrplot)
 library(psych)
 library(ggplot2)
 library(dplyr)
+library(Amelia)
 ```
 
 ```{r echo=FALSE, Load_the_Data}
@@ -136,7 +137,7 @@ ggplot(wine,aes(free.sulfur.dioxide)) +
 summary(wine$free.sulfur.dioxide)
 ```
 
-The wine sodium chloride concentration distribution is skewed to the right.
+The free sulfur dioxide concentration distribution is skewed to the right.
 The summary statistics are provided above.
 
 ```{r echo=FALSE}
@@ -149,7 +150,7 @@ ggplot(wine,aes(total.sulfur.dioxide)) +
 summary(wine$total.sulfur.dioxide)
 ```
 
-The total sulfur dioxide concentration distribution is skewed to the right.
+The total sulfur dioxide concentration distribution is skewed to the right. 
 The summary statistics are provided above.
 
 ```{r echo=FALSE}
@@ -263,9 +264,10 @@ There are 1599 wine samples with 11 features: tartaric acid concentration,
 acetic acid concentration, citric acid concentration, residual sugar 
 concentration, sodium chloride concentration, free sulfur dioxide concentration,
 total sulfur dioxide concentration, density, pH, potassium sulphate 
-concentration, % alcohol, and quality. All of the features are continuous 
-variables. Some of the feature distributions are close to normal, while others 
-are skewed to the right. The wine quality is a score between 0 and 10. 
+concentration, % alcohol, and quality. All of the features except quality are 
+continuous variables. Some of the feature distributions are close to normal, 
+while others are skewed to the right. 
+The wine quality is a score between 0 and 10. 
 
 ### What is/are the main feature(s) of interest in your dataset?
 The feature of interest is the quality of the wine. This analysis aims to 
@@ -274,12 +276,13 @@ investigate which of the other features influence the quality.
 ### What other features in the dataset do you think will help support your \
 investigation into your feature(s) of interest?
 All the features are related with the chemical composition, chemical property,
-and physical property of the wine sample. So, I suspect each feature will have
-some influence on the quality, although some features may have more influence
-than the others.
+and physical property of the wine sample. So, I suspect many of the features 
+will have some influence on the quality, although some features may have more 
+influence than the others.
 
 ### Did you create any new variables from existing variables in the dataset?
 There are 3 new variables created:
+
 1. Total acid concentration: tartaric acid + acetic acid + citric acid 
 concentration
 2. Total salt concentration: sodium chloride concentration + potassium sulphate
@@ -292,11 +295,12 @@ Did you perform any operations on the data to tidy, adjust, or change the form \
 of the data? If so, why did you do this?
 Some of the features are skewed and have 0 values. However, no transformation
 was performed as these values are reasonable and will be used as input variables
-in regression later.
+in linear regression later.
 
 # Bivariate Plots Section
 
-```{r echo=FALSE}
+
+```{r CorrelationPlot, fig.width=8, fig.height=8, echo=FALSE}
 cor.mtest <- function(mat, conf.level = 0.95){
   mat <- as.matrix(mat)
     n <- ncol(mat)
@@ -318,22 +322,27 @@ M = cor(wine[,c(2:16)])
 res1 <- cor.mtest(wine[,c(2:16)],0.95)
 res2 <- cor.mtest(wine[,c(2:16)],0.99)
 ## specialized the insignificant value according to the significant level
-corrplot(M, p.mat = res1[[1]], sig.level=0.2)
+corrplot(M, p.mat = res1[[1]], sig.level=0.05)
 
 ```
 
-The above correlation plot shows that the quality is positively correlated 
-with alcohol, potassium sulphate, citric acid, and dioxide ratio. 
-Moreover, quality has negative correlation with acetic acid concentration, 
-density, and total sulfur dioxide concentration.
+This figure shows correlations between the features in the dataset. The values
+correspond to the pearson correlation scores, and crosses indicate that the
+absolute value of the pearson correlation is insignificant based on p-value of 
+0.05. 
+
+The above correlation plot shows that the quality has a strong positive 
+correlation with alcohol and a strong negative correlation with acetic acid.
 
 Among the features other than quality, the followings are very strong positive
 correlations:
+
 1. Tartaric acid and citric acid concentration
 2. Tartaric acid concentration and density
 3. Free sulfur dioxide and total sulfur dioxide concentration
 
 Similarly, the followings are the strong negative correlations:
+
 1. Citric acid and acetic acid concentration
 2. Density and alcohol concentration
 
@@ -434,7 +443,7 @@ ggplot(wine,aes(quality,volatile.acidity,group=quality)) +
 tapply(wine$volatile.acidity,wine$quality,summary)
 ```
 
-The boxplot and summary statistics suggest that there may be a strong negative
+The boxplot and summary statistics show a negative
 correlation between the quality and acetic acid concentration.
 
 ```{r echo=FALSE}
@@ -447,7 +456,7 @@ ggplot(wine,aes(quality,citric.acid,group=quality)) +
 tapply(wine$citric.acid,wine$quality,summary)
 ```
 
-The boxplot and summary statistics suggest that there may be a strong positive
+The boxplot and summary statistics shows a weak positive
 correlation between the quality and citric acid concentration.
 
 ```{r echo=FALSE}
@@ -542,8 +551,8 @@ ggplot(wine,aes(quality,density,group=quality)) +
 tapply(wine$density,wine$quality,summary)
 ```
 
-The boxplot and summary statistics suggest that there may be some correlation 
-between the quality and density - the lower the density, the higher the quality.
+The boxplot and summary statistics show a weak negative correlation between 
+quality and density.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,alcohol,group=quality)) + 
@@ -555,7 +564,7 @@ ggplot(wine,aes(quality,alcohol,group=quality)) +
 tapply(wine$alcohol,wine$quality,summary)
 ```
 
-The boxplot and summary statistics suggest that there may be some positive 
+The boxplot and summary statistics show a positive 
 correlation between the quality and %alcohol.
 
 ```{r echo=FALSE}
@@ -581,7 +590,7 @@ ggplot(wine,aes(quality,sulphates,group=quality)) +
 tapply(wine$sulphates,wine$quality,summary)
 ```
 
-The boxplot and summary statistics suggest that there may be some positive 
+The boxplot and summary statistics show a positive 
 correlation between the quality and potassium sulphate concentration.
 
 ```{r echo=FALSE}
@@ -594,7 +603,7 @@ ggplot(wine,aes(quality,total.salt,group=quality)) +
 tapply(wine$total.salt,wine$quality,summary)
 ```
 
-The boxplot and summary statistics suggest that there may be some positive 
+The boxplot and summary statistics show a weak positive 
 correlation between the quality and total salt concentration.
 
 # Bivariate Analysis
@@ -603,20 +612,21 @@ correlation between the quality and total salt concentration.
 investigation. How did the feature(s) of interest vary with other features in \
 the dataset?
 
-The quality is positively correlated with alcohol, potassium sulphate, 
-citric acid, and dioxide ratio. Moreover, quality has negative correlation with 
-acetic acid concentration, density, and total sulfur dioxide concentration.
+The quality has strong positive correlation with alcohol and strong negative 
+correlation with acetic acid.
 
 ### Did you observe any interesting relationships between the other features \
 (not the main feature(s) of interest)?
 
 Among the features other than quality, the followings are very strong positive
 correlations:
+
 1. Tartaric acid and citric acid concentration
 2. Tartaric acid concentration and density
 3. Free sulfur dioxide and total sulfur dioxide concentration
 
 Similarly, the followings are the strong negative correlations:
+
 1. Citric acid and acetic acid concentration
 2. Density and alcohol concentration
 
@@ -626,64 +636,100 @@ listed above.
 
 ### What was the strongest relationship you found?
 
-The two correlations between total acid concentration and density as well as
-total acid concentration and pH seem to be equally strong. They are the most
-obvious correlation observed.
+The strongest correlation was tartaric acid concentration and density.
 
 # Multivariate Plots Section
 
 Here, we will re-evaluate the correlations that we found in the bivariate 
 analysis by analyzing the correlation between quality and 2 other features.
 
+```{r echo=FALSE}
+ggplot(wine,aes(fixed.acidity,citric.acid,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5,position='jitter') +
+  scale_color_brewer(type='div',
+                     guide = guide_legend(title='Quality',reverse=FALSE,
+                                          override.aes=list(alpha=1,size=2))) +
+  ylab('Citric Acid (g/L)') +
+  xlab('Tartaric Acid (g/L)') +
+  ggtitle('Quality vs Tartaric Acid and Citric Acid Concentration') +
+  theme_dark()
+```
+
+In the above figure, there is no clear separation between high quality and low
+quality wine samples. This aligns with the bivariate analysis result in which 
+quality did not show strong correlation with tartaric acid and citric acid 
+concentration.
+
 ```{r echo=FALSE, Multivariate_Plots}
-ggplot(wine,aes(total.acid,density,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
+ggplot(wine,aes(fixed.acidity,density,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5,position='jitter') +
   scale_color_brewer(type='div',
                      guide = guide_legend(title='Quality',reverse=FALSE,
                                           override.aes=list(alpha=1,size=2))) +
   ylab('Density (g/mL)') +
-  xlab('Total Acid (g/L)') +
-  ggtitle('Quality vs Total Acid Concentration and Density') +
+  xlab('Tartaric Acid (g/L)') +
+  ggtitle('Quality vs Tartaric Acid Concentration and Density') +
   theme_dark()
 ```
 
 In the above figure, most of the high quality wine samples are on the bottom 
-right region, while the low quality on the upper left region.
-This plot aligns with the bivariate plot between quality and density. 
+right region, while the low quality on the upper left region. However, there is
+no separation if one analyzes only from one of the axes, which aligns with the
+bivariate analysis result in which quality did not show significant correlation
+with tartaric acid concentration and density.
 
 ```{r echo=FALSE}
-ggplot(wine,aes(total.acid,pH,color=factor(quality))) +
+ggplot(wine,aes(free.sulfur.dioxide,total.sulfur.dioxide,
+                color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5,position='jitter') +
+  scale_color_brewer(type='div',
+                     guide = guide_legend(title='Quality',reverse=FALSE,
+                                          override.aes=list(alpha=1,size=2))) +
+  ylab('Total Sulfur Dioxide (g/L)') +
+  xlab('Free Sulfur Dioxide (g/L)') +
+  ggtitle('Quality vs Free Sulfur Dioxide and Total Sulfur Dioxide') +
+  theme_dark()
+```
+
+In the above figure, most of the high quality wine samples are on the bottom 
+right region, while the low quality on the upper left region. However, there is
+no separation if one analyzes only from one of the axes, which aligns with the
+bivariate analysis result in which quality did not show strong correlation
+with total and free sulfur dioxide concentration. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(volatile.acidity,citric.acid,color=factor(quality))) +
   geom_point(alpha=0.8,size=1.5) +
   scale_color_brewer(type='div',
                      guide = guide_legend(title='Quality',reverse=FALSE,
                                           override.aes=list(alpha=1,size=2))) +
-  ylab('pH') +
-  xlab('Total Acid (g/L)') +
-  ggtitle('Quality vs Total Acid Concentration and pH') +
+  ylab('Citric Acid (g/L)') +
+  xlab('Acetic Acid (g/L)') +
+  ggtitle('Quality vs Acetic Acid and Citric Acid Concentration') +
   theme_dark()
 ```
 
-In the above plot, there is no clear separation between high quality and
-low quality wine samples. This observation also aligns with with the 
-bivariate analysis, in which the correlation between quality and pH or 
-total acid concentration seems to be weak.
+In the above plot, most of the high quality wine samples are on the left, while
+the low quality samples are on the right, which aligns with the bivariate 
+analysis result in which quality shows negative correlation with acetic acid
+concentration.
 
 ```{r echo=FALSE}
-ggplot(wine,aes(citric.acid,alcohol,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
+ggplot(wine,aes(alcohol,density,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5,position='jitter') +
   scale_color_brewer(type='div',
                      guide = guide_legend(title='Quality',reverse=FALSE,
                                           override.aes=list(alpha=1,size=2))) +
-  ylab('Alcohol (%)') +
-  xlab('Citric Acid (g/L)') +
-  ggtitle('Quality vs Citric Acid and Alcohol Concentration') +
+  ylab('Density (g/mL)') +
+  xlab('Alcohol (%)') +
+  ggtitle('Quality vs Density and Alcohol Concentration') +
   theme_dark()
 ```
 
-Here, high quality wine samples have high citric acid concentration and
-alcohol concentration (upper right region), while low quality samples have low 
-citric acid and alcohol concentration (lower left region) aligned with the 
-observation in bivariate analysis.
+In the above plot, most of the high quality wine samples are on the right, while
+the low quality samples are on the left, which aligns with the bivariate 
+analysis result in which quality shows positive correlation with alcohol
+concentration.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(volatile.acidity,alcohol,color=factor(quality))) +
@@ -698,40 +744,78 @@ ggplot(wine,aes(volatile.acidity,alcohol,color=factor(quality))) +
 ```
 
 Here, most of the high quality wine samples have high alcohol and low acetic 
-acid concentration (upper left region), aligned with the observation in 
-bivariate analysis.
+acid concentration (upper left region). This result aligns with the bivariate
+analysis in which quality positively correlates with alcohol and negatively 
+correlates with acetic acid.
 
 ```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,density,color=factor(quality))) +
+ggplot(wine,aes(volatile.acidity,sulphates,color=factor(quality))) +
   geom_point(alpha=0.8,size=1.5) +
   scale_color_brewer(type='div',
                      guide = guide_legend(title='Quality',reverse=FALSE,
                                           override.aes=list(alpha=1,size=2))) +
-  ylab('Density (g/mL)') +
+  ylab('Potassium Sulphate (g/L)') +
   xlab('Acetic Acid (g/L)') +
-  ggtitle('Quality vs Density and Acetic Acid Concentration') +
+  ggtitle('Quality vs Acetic Acid and Potassium Sulphate Concentration') +
   theme_dark()
 ```
 
-Here, most of the high quality wine samples have low density and acetic acid
-concentration (bottom left region), aligned with the observation in bivariate 
-analysis.
-
-The quality's positive correlation with citric acid, alcohol, and potassium 
-sulphate concentration, as well as negative correlation with acetic acid 
-concentration and density shown above suggest that we may be able to build a 
-model of quality as a function of these features.
+Here, most of the high quality wine samples are on the upper left region, and 
+the low quality are in the lower right region. This result aligns with the 
+bivariate analysis in which quality positively correlates with potassium 
+sulphate and negatively correlates with acetic acid concentration.
 
 ```{r echo=FALSE}
-library(memisc)
-m1 <- lm(quality ~ alcohol,data=wine)
-m2 <- update(m1, ~ . + citric.acid)
-m3 <- update(m2, ~ . + sulphates)
-m4 <- update(m3, ~ . + volatile.acidity)
-m5 <- update(m4, ~ . + density)
-mtable(m1,m2,m3,m4,m5,sdigits=3)
+ggplot(wine,aes(alcohol,chlorides,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5) +
+  scale_color_brewer(type='div',
+                     guide = guide_legend(title='Quality',reverse=FALSE,
+                                          override.aes=list(alpha=1,size=2))) +
+  ylab('Sodium Chloride (g/L)') +
+  xlab('Alcohol (%)') +
+  ggtitle('Quality vs Alcohol and Sodium Chloride Concentration') +
+  theme_dark()
 ```
 
+Here, most of the high quality wine samples are on the right, while the low 
+quality samples are on the left. This result aligns with the 
+bivariate analysis in which quality positively correlates with alcohol 
+concentration.
+
+```{r echo=FALSE}
+ggplot(wine,aes(alcohol,pH,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5) +
+  scale_color_brewer(type='div',
+                     guide = guide_legend(title='Quality',reverse=FALSE,
+                                          override.aes=list(alpha=1,size=2))) +
+  ylab('pH') +
+  xlab('Alcohol (%)') +
+  ggtitle('Quality vs Alcohol Concentration and pH') +
+  theme_dark()
+```
+
+Here, most of the high quality wine samples are on the right, while the low 
+quality samples are on the left. This result aligns with the 
+bivariate analysis in which quality positively correlates with alcohol 
+concentration.
+
+In the followings, multinomial logistic regression is used to build a predictive
+model based on the wine sample features. 
+
+```{r echo=FALSE}
+sapply(wine,function(x) sum(is.na(x)))
+```
+First, confirm that there is no missing value.
+
+Next, we need to use stratified splitting as there is imbalance in the number
+of wine samples in each quality category.
+
+The above results show that only the following features are significant:
+alcohol, acetic acid, sodium chloride, potassium sulphate, and pH. The following
+is the fitting with only these features.
+
+
+**Insert comment here**
 
 # Multivariate Analysis
 
@@ -739,45 +823,112 @@ mtable(m1,m2,m3,m4,m5,sdigits=3)
 investigation. Were there features that strengthened each other in terms of \
 looking at your feature(s) of interest?
 
+Using acetic acid and alcohol concentration in combination to distinguish high 
+quality wine from low quality wine is easier than using one of these two 
+features. In the bivariate box plots, quality shows a positive correlation with 
+acetic acid and alcohol concentration. However, there are overlaps and outliers
+that make it difficult to assess the strength of the correlation. 
+Combining quality, acetic acid, and alcohol in one multivariate plot shows a 
+much better separation between high quality and low quality wine samples.
+
+Similar trend is also observed when analyzing the following multivariate plots:
+
+1. Quality vs alcohol and potassium sulphate concentration
+2. Quality vs tartaric acid concentration and density
+3. Quality vs citric acid and alcohol concentration
+4. Quality vs sodium chloride and alcohol concentration
+5. Quality vs pH and alcohol concentration
+
 ### Were there any interesting or surprising interactions between features?
+Initially, I was surprised that the density has a strong positive correlation 
+with tartaric acid concentration. However, I found out that tartaric acid 
+density is 1.78 g/mL, much higher than density of wine ~ 1g/L.
 
 ### OPTIONAL: Did you create any models with your dataset? Discuss the \
 strengths and limitations of your model.
+
+Yes, a linear model was created with alcohol, acetic acid, sodium chloride, pH,
+and potassium sulphate as the input variables. The variables in the model 
+account for 34.6% of the variance in the wine sample quality. Alcohol and acetic
+acid have the strongest influence as indicated by significant increase in 
+adjusted R-square for these variables compared with the other variables. 
 
 ------
 
 # Final Plots and Summary
 
-> **Tip**: You've done a lot of exploration and have built up an understanding
-of the structure of and relationships between the variables in your dataset.
-Here, you will select three plots from all of your previous exploration to
-present here as a summary of some of your most interesting findings. Make sure
-that you have refined your selected plots for good titling, axis labels (with
-units), and good aesthetic choices (e.g. color, transparency). After each plot,
-make sure you justify why you chose each plot by describing what it shows.
-
 ### Plot One
-```{r echo=FALSE, Plot_One}
+```{r CorrelationPlot, fig.width=8, fig.height=8, echo=FALSE}
+cor.mtest <- function(mat, conf.level = 0.95){
+  mat <- as.matrix(mat)
+    n <- ncol(mat)
+    p.mat <- lowCI.mat <- uppCI.mat <- matrix(NA, n, n)
+    diag(p.mat) <- 0
+    diag(lowCI.mat) <- diag(uppCI.mat) <- 1
+    for(i in 1:(n-1)){
+        for(j in (i+1):n){
+            tmp <- cor.test(mat[,i], mat[,j], conf.level = conf.level)
+            p.mat[i,j] <- p.mat[j,i] <- tmp$p.value
+            lowCI.mat[i,j] <- lowCI.mat[j,i] <- tmp$conf.int[1]
+            uppCI.mat[i,j] <- uppCI.mat[j,i] <- tmp$conf.int[2]
+        }
+    }
+    return(list(p.mat, lowCI.mat, uppCI.mat))
+}
+
+M = cor(wine[,c(2:16)])
+res1 <- cor.mtest(wine[,c(2:16)],0.95)
+res2 <- cor.mtest(wine[,c(2:16)],0.99)
+## specialized the insignificant value according to the significant level
+corrplot(M, p.mat = res1[[1]], sig.level=0.05)
 
 ```
 
 ### Description One
 
+Various features affect the quality of wine. Among them, alcohol and acetic acid
+concentration have the strongest correlation with the quality.
 
 ### Plot Two
-```{r echo=FALSE, Plot_Two}
-
+```{r echo=FALSE}
+ggplot(wine,aes(volatile.acidity,alcohol,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5) +
+  scale_color_brewer(type='div',
+                     guide = guide_legend(title='Quality',reverse=FALSE,
+                                          override.aes=list(alpha=1,size=2))) +
+  ylab('Alcohol (%)') +
+  xlab('Acetic Acid (g/L)') +
+  ggtitle('Quality vs Alcohol and Acetic Acid Concentration') +
+  theme_dark()
 ```
 
 ### Description Two
-
+Most of the high quality wine samples have high alcohol and low acetic 
+acid concentration (upper left region), while most of the low quality wine 
+samples have low alcohol and high acetic acid concentration (lower right 
+region). This correlation makes sense as wine with high acetic acid 
+concentration may have vinegar taste, and wine with low alcohol concentration
+may not taste good. 
 
 ### Plot Three
-```{r echo=FALSE, Plot_Three}
-
+```{r echo=FALSE}
+ggplot(wine,aes(volatile.acidity,sulphates,color=factor(quality))) +
+  geom_point(alpha=0.8,size=1.5) +
+  scale_color_brewer(type='div',
+                     guide = guide_legend(title='Quality',reverse=FALSE,
+                                          override.aes=list(alpha=1,size=2))) +
+  ylab('Potassium Sulphate (g/L)') +
+  xlab('Acetic Acid (g/L)') +
+  ggtitle('Quality vs Acetic Acid and Potassium Sulphate Concentration') +
+  theme_dark()
 ```
 
 ### Description Three
+The next important feature after alcohol and acetic acid concentration is 
+potassium phosphate concentration. Using both potassium sulphate and acetic 
+acid concentration, we can also distinguish high quality wine (upper left) from
+low quality wine (lower right) although this plot has less clear separation
+than the second plot.
 
 ------
 
@@ -788,5 +939,20 @@ the insights you found. What were some of the struggles that you went through?
 What went well? What was surprising? Make sure you include an insight into
 future work that could be done with the dataset.
 
-> **Tip**: Don't forget to remove this, and the other **Tip** sections before
-saving your final work and knitting the final report!
+The wine dataset consists of 1599 wine samples with various quality and feature
+values. This projects gradually explores the correlation among the features
+starting from univariate, bivariate, to multivariate analysis. This analysis
+identifies that alcohol and acetic acid concentration are the features that 
+have the most significant influence on the wine quality. This conclusion makes 
+sense as wine with high acetic acid concentration may have vinegar taste, and 
+wine with low alcohol concentration may not taste good. 
+
+The challenges faced in the analysis were the relatively large number of 
+outliers observed during bivariate and multivariate analysis. Larger number of
+data may help clarify if the outliers are indeed outliers due to some 
+measurement errors, or they are in fact the results of more complex 
+interactions between the features that cannot be captured by 
+simply plotting 2 to 3 variables in a single plot. It may also bring more 
+visual clarity in the separation between high quality and low quality samples 
+when assessing the results. 
+
