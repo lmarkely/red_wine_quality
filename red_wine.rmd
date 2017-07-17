@@ -288,15 +288,11 @@ concentration
 ### Of the features you investigated, were there any unusual distributions? \
 Did you perform any operations on the data to tidy, adjust, or change the form \
 of the data? If so, why did you do this?
-No, there is no unusual distribution.
+Some of the features are skewed and have 0 values. However, no transformation
+was performed as these values are reasonable and will be used as input variables
+in regression later.
 
 # Bivariate Plots Section
-
-> **Tip**: Based on what you saw in the univariate plots, what relationships
-between variables might be interesting to look at in this section? Don't limit
-yourself to relationships between a main output feature and one of the
-supporting variables. Try to look at relationships between supporting variables
-as well.
 
 ```{r echo=FALSE, Bivariate_Plots}
 
