@@ -15,6 +15,7 @@ Red Wine Quality Exploratory Data Analysis by Lam Raga A. Markely
 # for other code chunks once you have verified that each plot comes out as you
 # want it to. This will clean up the flow of your report.
 
+library(psych)
 library(ggplot2)
 library(dplyr)
 ```
@@ -314,7 +315,7 @@ These correlations are analyzed more closely in the following plots.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(total.acid,density)) +
-  geom_point() +
+  geom_point(alpha=0.5) +
   ylab('Density (g/mL)') +
   xlab('Total Acid (g/L)')
 
@@ -327,7 +328,7 @@ multivariate analysis together with quality.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(total.acid,pH)) +
-  geom_point() +
+  geom_point(alpha=0.5) +
   ylab('pH') +
   xlab('Total Acid (g/L)')
 
@@ -337,6 +338,52 @@ cor.test(wine$pH,wine$total.acid,method='pearson')
 Similarly, both the scatter plot and pearson correlation indicate strong 
 correlation. We will also revisit this later in multivariate analysis with 
 quality.
+
+```{r echo=FALSE}
+ggplot(wine,aes(alcohol,density)) +
+  geom_point(position='jitter',alpha=0.5) +
+  ylab('Density (g/mL)') +
+  xlab('Alcohol (%)')
+
+cor.test(wine$alcohol,wine$density,method='pearson')
+```
+
+The above plot shows that some samples with the same %alcohol seem to 
+significantly vary in density. We will also revisit this later in multivariate 
+analysis with quality.
+
+The following plots explore the correlation among quality and the above 
+features. 
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,total.acid,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4)
+
+install.packages('psych')
+library(psych)
+
+```
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,density,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4)
+```
+
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,alcohol,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4)
+```
+
+```{r echo=FALSE}
+ggplot(wine,aes(quality,pH,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4)
+```
+
 
 # Bivariate Analysis
 
