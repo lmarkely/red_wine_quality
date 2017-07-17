@@ -20,6 +20,8 @@ library(psych)
 library(ggplot2)
 library(dplyr)
 library(Amelia)
+library(nnet)
+library(mlogit)
 ```
 
 ```{r echo=FALSE, Load_the_Data}
@@ -799,24 +801,6 @@ quality samples are on the left. This result aligns with the
 bivariate analysis in which quality positively correlates with alcohol 
 concentration.
 
-In the followings, multinomial logistic regression is used to build a predictive
-model based on the wine sample features. 
-
-```{r echo=FALSE}
-sapply(wine,function(x) sum(is.na(x)))
-```
-First, confirm that there is no missing value.
-
-Next, we need to use stratified splitting as there is imbalance in the number
-of wine samples in each quality category.
-
-The above results show that only the following features are significant:
-alcohol, acetic acid, sodium chloride, potassium sulphate, and pH. The following
-is the fitting with only these features.
-
-
-**Insert comment here**
-
 # Multivariate Analysis
 
 ### Talk about some of the relationships you observed in this part of the \
@@ -843,15 +827,6 @@ Similar trend is also observed when analyzing the following multivariate plots:
 Initially, I was surprised that the density has a strong positive correlation 
 with tartaric acid concentration. However, I found out that tartaric acid 
 density is 1.78 g/mL, much higher than density of wine ~ 1g/L.
-
-### OPTIONAL: Did you create any models with your dataset? Discuss the \
-strengths and limitations of your model.
-
-Yes, a linear model was created with alcohol, acetic acid, sodium chloride, pH,
-and potassium sulphate as the input variables. The variables in the model 
-account for 34.6% of the variance in the wine sample quality. Alcohol and acetic
-acid have the strongest influence as indicated by significant increase in 
-adjusted R-square for these variables compared with the other variables. 
 
 ------
 
