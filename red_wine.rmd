@@ -295,8 +295,48 @@ in regression later.
 # Bivariate Plots Section
 
 ```{r echo=FALSE, Bivariate_Plots}
-
+library(GGally)
+set.seed(20022012)
+wine_samp <- wine[sample(1:length(wine$quality),100),]
+names(wine_samp[,c(5,8:10,12:16)])
+pairs(wine_samp[,c(5,8:10,12:16)])
 ```
+
+The above scatterplot matrix include all of the original and new features,
+except the features used to create the new features in order to avoid 
+overplotting. Also, only a subset of 100 samples are plotted. 
+Among all the correlations, there are a few strongly correlated features:
+1. density and total acid concentration
+2. pH and total acid concentration
+3. % alcohol and density
+
+These correlations are analyzed more closely in the following plots.
+
+```{r echo=FALSE}
+ggplot(wine,aes(total.acid,density)) +
+  geom_point() +
+  ylab('Density (g/mL)') +
+  xlab('Total Acid (g/L)')
+
+cor.test(wine$density,wine$total.acid,method='pearson')
+```
+
+Both the scatter plot and pearson correlation indicate strong positive 
+correlation. It may be interesting to investigate this later when we perform 
+multivariate analysis together with quality.
+
+```{r echo=FALSE}
+ggplot(wine,aes(total.acid,pH)) +
+  geom_point() +
+  ylab('pH') +
+  xlab('Total Acid (g/L)')
+
+cor.test(wine$pH,wine$total.acid,method='pearson')
+```
+
+Similarly, both the scatter plot and pearson correlation indicate strong 
+correlation. We will also revisit this later in multivariate analysis with 
+quality.
 
 # Bivariate Analysis
 
