@@ -1,4 +1,4 @@
-Red Wine Quality Exploratory Data Analysis by Lam Raga A. Markely
+Exploratory Data Analysis of Red Wine Dataset
 ========================================================
 
 
