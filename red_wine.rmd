@@ -35,7 +35,7 @@ chemical properties influence the quality of red wines.
 
 # Univariate Plots Section
 
-```{r echo=FALSE, Univariate_Plots}
+```{r echo = FALSE, Univariate_Plots}
 wine <- subset(wine, select = -c(X))
 dim(wine)
 str(wine)
@@ -51,10 +51,10 @@ In the following analysis, the variable fixed acidity will be referred as
 tartaric acid, volatile acidity as acetic acid, chlorides as sodium chloride,
 and sulphates as potassium sulphate as described in the above link. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality)) +
-  geom_histogram(binwidth=1,color='white') +
-  scale_x_continuous(breaks=seq(3,8,1)) +
+```{r echo = FALSE}
+ggplot(wine, aes(quality)) +
+  geom_histogram(binwidth = 1, color = 'white') +
+  scale_x_continuous(breaks = seq(3, 8, 1)) +
   xlab('Quality') +
   ylab('Count')
 
@@ -64,10 +64,10 @@ summary(wine$quality)
 Most of the wine samples have quality 5 and 6. 
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(fixed.acidity)) +
-  geom_histogram(color='white',binwidth=1) +
-  scale_x_continuous(breaks=seq(4,16,1)) +
+```{r echo = FALSE}
+ggplot(wine, aes(fixed.acidity)) +
+  geom_histogram(color = 'white', binwidth = 1) +
+  scale_x_continuous(breaks = seq(4, 16, 1)) +
   xlab('Tartaric Acid (g/L)') +
   ylab('Count')
 
@@ -78,10 +78,10 @@ summary(wine$fixed.acidity)
 The tartaric acid concentration distribution is slightly skewed to the right.
 The summary statistics are provided above.
 
-```{r echo=FALSE}
+```{r echo = FALSE}
 ggplot(wine,aes(volatile.acidity)) +
-  geom_histogram(color='white',binwidth=0.1) +
-  scale_x_continuous(breaks=seq(0.1,1.6,0.1)) +
+  geom_histogram(color = 'white', binwidth = 0.1) +
+  scale_x_continuous(breaks = seq(0.1, 1.6, 0.1)) +
   xlab('Acetic Acid (g/L)') +
   ylab('Count')
 
@@ -92,9 +92,9 @@ The acetic acid concentration distribution is slightly skewed to the right.
 The summary statistics are provided above.
 
 ```{r echo = FALSE}
-ggplot(wine,aes(citric.acid)) +
-  geom_histogram(color='white',binwidth=0.05) +
-  scale_x_continuous(breaks=seq(0,1.0,0.1)) +
+ggplot(wine, aes(citric.acid)) +
+  geom_histogram(color = 'white',binwidth = 0.05) +
+  scale_x_continuous(breaks = seq(0, 1.0, 0.1)) +
   xlab('Citric Acid (g/L)') +
   ylab('Count')
 
@@ -104,10 +104,10 @@ summary(wine$citric.acid)
 The citric acid concentration distribution is very skewed to the right.
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(residual.sugar)) +
-  geom_histogram(color='white',binwidth=0.5) +
-  scale_x_continuous(breaks=seq(0,16,1)) +
+```{r echo = FALSE}
+ggplot(wine, aes(residual.sugar)) +
+  geom_histogram(color = 'white',binwidth = 0.5) +
+  scale_x_continuous(breaks = seq(0, 16, 1)) +
   xlab('Residual Sugar (g/L)') +
   ylab('Count')
 
@@ -117,10 +117,10 @@ summary(wine$residual.sugar)
 The residual sugar concentration distribution is skewed to the right.
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(chlorides)) +
-  geom_histogram(color='white',binwidth=0.02) +
-  scale_x_continuous(breaks=seq(0,0.7,0.05)) +
+```{r echo = FALSE}
+ggplot(wine, aes(chlorides)) +
+  geom_histogram(color = 'white',binwidth = 0.02) +
+  scale_x_continuous(breaks = seq(0, 0.7, 0.05)) +
   xlab('Sodium Chloride (g/L)') +
   ylab('Count')
 
@@ -130,10 +130,10 @@ summary(wine$chlorides)
 The sodium chloride concentration distribution is skewed to the right.
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(free.sulfur.dioxide)) +
-  geom_histogram(color='white',binwidth=2) +
-  scale_x_continuous(breaks=seq(0,80,5)) +
+```{r echo = FALSE}
+ggplot(wine, aes(free.sulfur.dioxide)) +
+  geom_histogram(color = 'white',binwidth = 2) +
+  scale_x_continuous(breaks = seq(0, 80, 5)) +
   xlab('Free Sulfur Dioxide (mg/L)') +
   ylab('Count')
 
@@ -143,10 +143,10 @@ summary(wine$free.sulfur.dioxide)
 The free sulfur dioxide concentration distribution is skewed to the right.
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(total.sulfur.dioxide)) +
-  geom_histogram(color='white',binwidth=5) +
-  scale_x_continuous(breaks=seq(0,300,25)) +
+```{r echo = FALSE}
+ggplot(wine, aes(total.sulfur.dioxide)) +
+  geom_histogram(color = 'white', binwidth = 5) +
+  scale_x_continuous(breaks = seq(0, 300, 25)) +
   xlab('Total Sulfur Dioxide (mg/L)') +
   ylab('Count')
 
@@ -157,9 +157,9 @@ The total sulfur dioxide concentration distribution is skewed to the right.
 The summary statistics are provided above.
 
 ```{r echo=FALSE}
-ggplot(wine,aes(density)) +
-  geom_histogram(color='white',binwidth=0.001) +
-  scale_x_continuous(breaks=seq(0.99,1.1,0.001)) +
+ggplot(wine, aes(density)) +
+  geom_histogram(color = 'white', binwidth = 0.001) +
+  scale_x_continuous(breaks = seq(0.99, 1.1, 0.001)) +
   xlab('Density (g/mL)') +
   ylab('Count')
 
@@ -169,10 +169,10 @@ summary(wine$total.sulfur.dioxide)
 The density distribution is close to normal distribution. 
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(pH)) +
-  geom_histogram(color='white',binwidth=0.04) +
-  scale_x_continuous(breaks=seq(2.740,4.010,0.1)) +
+```{r echo = FALSE}
+ggplot(wine, aes(pH)) +
+  geom_histogram(color = 'white', binwidth = 0.04) +
+  scale_x_continuous(breaks = seq(2.740, 4.010, 0.1)) +
   xlab('pH') +
   ylab('Count')
 
@@ -184,7 +184,7 @@ The summary statistics are provided above.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(sulphates)) +
-  geom_histogram(color='white',binwidth=0.1) +
+  geom_histogram(color = 'white',binwidth = 0.1) +
   scale_x_continuous(breaks=seq(0.3,2.00,0.1)) +
   xlab('Potassium Sulphate (g/L)') +
   ylab('Count')
@@ -195,10 +195,10 @@ summary(wine$sulphates)
 The potassium sulphate concentration distribution is skewed to the right.
 The summary statistics are provided above.
 
-```{r echo=FALSE}
-ggplot(wine,aes(alcohol)) +
-  geom_histogram(color='white',binwidth=0.1) +
-  scale_x_continuous(breaks=seq(8.40,14.90,1)) +
+```{r echo = FALSE}
+ggplot(wine, aes(alcohol)) +
+  geom_histogram(color = 'white', binwidth = 0.1) +
+  scale_x_continuous(breaks = seq(8.40, 14.90, 1)) +
   xlab('Alcohol (%)') +
   ylab('Count')
 
@@ -211,9 +211,9 @@ The summary statistics are provided above.
 ```{r echo=FALSE}
 wine$total.acid <- wine$fixed.acidity + wine$volatile.acidity + wine$citric.acid
 
-ggplot(wine,aes(total.acid)) +
-  geom_histogram(color='white',binwidth=0.5) +
-  scale_x_continuous(breaks=seq(0,22,1)) +
+ggplot(wine, aes(total.acid)) +
+  geom_histogram(color = 'white', binwidth = 0.5) +
+  scale_x_continuous(breaks = seq(0, 22, 1)) +
   xlab('Total Acid (g/L)') +
   ylab('Count')
 
@@ -227,9 +227,9 @@ skewed to the right. The summary statistics are provided above.
 ```{r echo=FALSE}
 wine$total.salt <- wine$sulphates + wine$chlorides
 
-ggplot(wine,aes(total.salt)) +
-  geom_histogram(color='white',binwidth=0.1) +
-  scale_x_continuous(breaks=seq(0.3,3,0.1)) +
+ggplot(wine, aes(total.salt)) +
+  geom_histogram(color = 'white', binwidth = 0.1) +
+  scale_x_continuous(breaks = seq(0.3, 3, 0.1)) +
   xlab('Total Salt (g/L)') +
   ylab('Count')
 
@@ -241,14 +241,12 @@ potassium sulphate concentration. The total salt distribution is skewed to the
 right. The summary statistics are provided above.
 
 
-```{r echo=FALSE}
+```{r echo = FALSE}
 wine$dioxide.ratio <- wine$free.sulfur.dioxide/wine$total.sulfur.dioxide
 
-ggplot(wine,aes(dioxide.ratio)) +
-  #geom_histogram(color='white') +
-  geom_histogram(color='white',binwidth=0.02) +
-  #scale_x_continuous() +
-  scale_x_continuous(breaks=seq(0,1,0.05)) +
+ggplot(wine, aes(dioxide.ratio)) +
+  geom_histogram(color = 'white', binwidth = 0.02) +
+  scale_x_continuous(breaks = seq(0,1,0.05)) +
   xlab('Sulfur Dioxide Ratio') +
   ylab('Count')
 
@@ -303,7 +301,7 @@ in linear regression later.
 # Bivariate Plots Section
 
 
-```{r fig.width=8, fig.height=8, echo=FALSE}
+```{r fig.width = 8, fig.height = 8, echo = FALSE}
 cor.mtest <- function(mat, conf.level = 0.95){
   mat <- as.matrix(mat)
     n <- ncol(mat)
@@ -322,10 +320,10 @@ cor.mtest <- function(mat, conf.level = 0.95){
 }
 
 M = cor(wine)
-res1 <- cor.mtest(wine,0.95)
-res2 <- cor.mtest(wine,0.99)
+res1 <- cor.mtest(wine, 0.95)
+res2 <- cor.mtest(wine, 0.99)
 ## specialized the insignificant value according to the significant level
-corrplot(M, p.mat = res1[[1]], sig.level=0.05)
+corrplot(M, p.mat = res1[[1]], sig.level = 0.05)
 
 ```
 
@@ -354,65 +352,65 @@ listed above.
 
 The above correlations are analyzed more closely in the following plots.
 
-```{r echo=FALSE}
-ggplot(wine,aes(fixed.acidity,citric.acid)) +
-  geom_point(alpha=0.5,position='jitter') +
+```{r echo = FALSE}
+ggplot(wine, aes(fixed.acidity, citric.acid)) +
+  geom_point(alpha = 0.5, position = 'jitter') +
   ylab('Citric Acid (g/L)') +
   xlab('Tartaric Acid (g/L)')
 
-cor.test(wine$citric.acid,wine$fixed.acidity,method='pearson')
+cor.test(wine$citric.acid, wine$fixed.acidity, method = 'pearson')
 ```
 
 Both the scatter plot and pearson correlation indicate strong positive 
 correlation. It may be interesting to investigate this later when we perform 
 multivariate analysis together with quality.
 
-```{r echo=FALSE}
-ggplot(wine,aes(fixed.acidity,density)) +
-  geom_point(alpha=0.5,position='jitter') +
+```{r echo = FALSE}
+ggplot(wine, aes(fixed.acidity, density)) +
+  geom_point(alpha = 0.5, position = 'jitter') +
   ylab('Density (g/mL)') +
   xlab('Tartaric Acid (g/L)')
 
-cor.test(wine$density,wine$fixed.acidity,method='pearson')
+cor.test(wine$density, wine$fixed.acidity, method = 'pearson')
 ```
 
 Both the scatter plot and pearson correlation indicate strong positive 
 correlation. We will also revisit this later in multivariate analysis with 
 quality.
 
-```{r echo=FALSE}
-ggplot(wine,aes(free.sulfur.dioxide,total.sulfur.dioxide)) +
-  geom_point(alpha=0.5,position='jitter') +
+```{r echo = FALSE}
+ggplot(wine, aes(free.sulfur.dioxide, total.sulfur.dioxide)) +
+  geom_point(alpha = 0.5, position = 'jitter') +
   ylab('Total Sulfur Dioxide (g/L)') +
   xlab('Free Sulfur Dioxide (g/L)')
 
-cor.test(wine$free.sulfur.dioxide,wine$total.sulfur.dioxide,method='pearson')
+cor.test(wine$free.sulfur.dioxide, wine$total.sulfur.dioxide, method = 'pearson')
 ```
 
 Similarly, both the scatter plot and pearson correlation indicate strong 
 positive correlation. We will also revisit this later in multivariate analysis 
 withquality.
 
-```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,citric.acid)) +
-  geom_point(alpha=0.5,position='jitter') +
+```{r echo = FALSE}
+ggplot(wine, aes(volatile.acidity, citric.acid)) +
+  geom_point(alpha = 0.5, position = 'jitter') +
   ylab('Citric Acid (g/L)') +
   xlab('Acetic Acid (g/L)')
 
-cor.test(wine$volatile.acidity,wine$citric.acid,method='pearson')
+cor.test(wine$volatile.acidity, wine$citric.acid, method = 'pearson')
 ```
 
 Both the scatter plot and pearson correlation indicate strong negative
 correlation. We will also revisit this later in multivariate analysis with 
 quality.
 
-```{r echo=FALSE}
-ggplot(wine,aes(alcohol,density)) +
-  geom_point(position='jitter',alpha=0.5) +
+```{r echo = FALSE}
+ggplot(wine, aes(alcohol, density)) +
+  geom_point(position = 'jitter', alpha = 0.5) +
   ylab('Density (g/mL)') +
   xlab('Alcohol (%)')
 
-cor.test(wine$alcohol,wine$density,method='pearson')
+cor.test(wine$alcohol, wine$density, method = 'pearson')
 ```
 
 The above plot shows that some samples with the same %alcohol seem to 
@@ -422,53 +420,53 @@ analysis with quality.
 The following plots explore the correlation among quality and the other 
 features. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,fixed.acidity,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, fixed.acidity, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Tartaric Acid (g/L)')
 
-tapply(wine$fixed.acidity,wine$quality,summary)
+tapply(wine$fixed.acidity, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and tartaric acid concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,volatile.acidity,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, volatile.acidity, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y= mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Acetic Acid (g/L)') 
 
-tapply(wine$volatile.acidity,wine$quality,summary)
+tapply(wine$volatile.acidity, wine$quality, summary)
 ```
 
 The boxplot and summary statistics show a negative
 correlation between the quality and acetic acid concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,citric.acid,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, citric.acid, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Citric Acid (g/L)') 
 
-tapply(wine$citric.acid,wine$quality,summary)
+tapply(wine$citric.acid, wine$quality, summary)
 ```
 
 The boxplot and summary statistics shows a weak positive
 correlation between the quality and citric acid concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,total.acid,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, total.acid, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Total Acid (g/L)') 
 
-tapply(wine$total.acid,wine$quality,summary)
+tapply(wine$total.acid, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
@@ -478,131 +476,131 @@ negatively correlated with acetic acid concentration, and not correlated with
 tartaric acid concentration. So, the total acid concentration may not be 
 correlated with the quality.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,residual.sugar,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, residual.sugar, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Residual Sugar (g/L)') 
 
-tapply(wine$residual.sugar,wine$quality,summary)
+tapply(wine$residual.sugar, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and residual sugar concentration. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,chlorides,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, chlorides, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Sodium Chloride (g/L)') 
 
-tapply(wine$chlorides,wine$quality,summary)
+tapply(wine$chlorides, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and sodium chloride concentration. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,free.sulfur.dioxide,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, free.sulfur.dioxide, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Free Sulfur Dioxide (mg/L)') 
 
-tapply(wine$free.sulfur.dioxide,wine$quality,summary)
+tapply(wine$free.sulfur.dioxide, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and free sulfur dioxide concentration. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,total.sulfur.dioxide,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, total.sulfur.dioxide, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Total Sulfur Dioxide (mg/L)') 
 
-tapply(wine$total.sulfur.dioxide,wine$quality,summary)
+tapply(wine$total.sulfur.dioxide, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and total sulfur dioxide concentration. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,dioxide.ratio,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, dioxide.ratio, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Sulfur Dioxide Ratio') 
 
-tapply(wine$dioxide.ratio,wine$quality,summary)
+tapply(wine$dioxide.ratio, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and the created sulfur dioxide ratio feature. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,density,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, density, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Density (g/L)') 
 
-tapply(wine$density,wine$quality,summary)
+tapply(wine$density, wine$quality, summary)
 ```
 
 The boxplot and summary statistics show a weak negative correlation between 
 quality and density.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,alcohol,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, alcohol, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Alcohol (%)') 
 
-tapply(wine$alcohol,wine$quality,summary)
+tapply(wine$alcohol, wine$quality, summary)
 ```
 
 The boxplot and summary statistics show a positive 
 correlation between the quality and %alcohol.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,pH,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, pH, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('pH') 
 
-tapply(wine$pH,wine$quality,summary)
+tapply(wine$pH, wine$quality, summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
 between the quality and pH.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,sulphates,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, sulphates, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Potassium Sulphate (g/L)') 
 
-tapply(wine$sulphates,wine$quality,summary)
+tapply(wine$sulphates, wine$quality, summary)
 ```
 
 The boxplot and summary statistics show a positive 
 correlation between the quality and potassium sulphate concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(quality,total.salt,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, total.salt, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Total Salt (g/L)') 
 
-tapply(wine$total.salt,wine$quality,summary)
+tapply(wine$total.salt, wine$quality, summary)
 ```
 
 The boxplot and summary statistics show a weak positive 
@@ -645,12 +643,12 @@ The strongest correlation was tartaric acid concentration and density.
 Here, we will re-evaluate the correlations that we found in the bivariate 
 analysis by analyzing the correlation between quality and 2 other features.
 
-```{r echo=FALSE}
-ggplot(wine,aes(fixed.acidity,citric.acid,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5,position='jitter') +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(fixed.acidity, citric.acid, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5, position = 'jitter') +
+  scale_color_brewer(type = 'div', 
+                     guide  =  guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Citric Acid (g/L)') +
   xlab('Tartaric Acid (g/L)') +
   ggtitle('Quality vs Tartaric Acid and Citric Acid Concentration') +
@@ -662,12 +660,12 @@ quality wine samples. This aligns with the bivariate analysis result in which
 quality did not show strong correlation with tartaric acid and citric acid 
 concentration.
 
-```{r echo=FALSE, Multivariate_Plots}
-ggplot(wine,aes(fixed.acidity,density,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5,position='jitter') +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE, Multivariate_Plots}
+ggplot(wine, aes(fixed.acidity, density, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5, position = 'jitter') +
+  scale_color_brewer(type = 'div', 
+                     guide  =  guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Density (g/mL)') +
   xlab('Tartaric Acid (g/L)') +
   ggtitle('Quality vs Tartaric Acid Concentration and Density') +
@@ -680,13 +678,13 @@ no separation if one analyzes only from one of the axes, which aligns with the
 bivariate analysis result in which quality did not show significant correlation
 with tartaric acid concentration and density.
 
-```{r echo=FALSE}
-ggplot(wine,aes(free.sulfur.dioxide,total.sulfur.dioxide,
-                color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5,position='jitter') +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(free.sulfur.dioxide, total.sulfur.dioxide, 
+                color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5, position = 'jitter') +
+  scale_color_brewer(type = 'div', 
+                     guide  =  guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Total Sulfur Dioxide (g/L)') +
   xlab('Free Sulfur Dioxide (g/L)') +
   ggtitle('Quality vs Free Sulfur Dioxide and Total Sulfur Dioxide') +
@@ -699,12 +697,12 @@ no separation if one analyzes only from one of the axes, which aligns with the
 bivariate analysis result in which quality did not show strong correlation
 with total and free sulfur dioxide concentration. 
 
-```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,citric.acid,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(volatile.acidity, citric.acid, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide  =  guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Citric Acid (g/L)') +
   xlab('Acetic Acid (g/L)') +
   ggtitle('Quality vs Acetic Acid and Citric Acid Concentration') +
@@ -716,12 +714,12 @@ the low quality samples are on the right, which aligns with the bivariate
 analysis result in which quality shows negative correlation with acetic acid
 concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(alcohol,density,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5,position='jitter') +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(alcohol, density, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5, position = 'jitter') +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Density (g/mL)') +
   xlab('Alcohol (%)') +
   ggtitle('Quality vs Density and Alcohol Concentration') +
@@ -733,12 +731,12 @@ the low quality samples are on the left, which aligns with the bivariate
 analysis result in which quality shows positive correlation with alcohol
 concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,alcohol,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(volatile.acidity, alcohol, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Alcohol (%)') +
   xlab('Acetic Acid (g/L)') +
   ggtitle('Quality vs Alcohol and Acetic Acid Concentration') +
@@ -750,12 +748,12 @@ acid concentration (upper left region). This result aligns with the bivariate
 analysis in which quality positively correlates with alcohol and negatively 
 correlates with acetic acid.
 
-```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,sulphates,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(volatile.acidity, sulphates, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Potassium Sulphate (g/L)') +
   xlab('Acetic Acid (g/L)') +
   ggtitle('Quality vs Acetic Acid and Potassium Sulphate Concentration') +
@@ -767,12 +765,12 @@ the low quality are in the lower right region. This result aligns with the
 bivariate analysis in which quality positively correlates with potassium 
 sulphate and negatively correlates with acetic acid concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(alcohol,chlorides,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(alcohol, chlorides, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Sodium Chloride (g/L)') +
   xlab('Alcohol (%)') +
   ggtitle('Quality vs Alcohol and Sodium Chloride Concentration') +
@@ -784,12 +782,12 @@ quality samples are on the left. This result aligns with the
 bivariate analysis in which quality positively correlates with alcohol 
 concentration.
 
-```{r echo=FALSE}
-ggplot(wine,aes(alcohol,pH,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(alcohol, pH, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('pH') +
   xlab('Alcohol (%)') +
   ggtitle('Quality vs Alcohol Concentration and pH') +
@@ -835,16 +833,16 @@ makes sense.
 # Final Plots and Summary
 
 ### Plot One
-```{r echo=FALSE}
-ggplot(wine,aes(quality,alcohol,group=quality)) + 
+```{r echo = FALSE}
+ggplot(wine, aes(quality, alcohol, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Alcohol (%)') 
 
-ggplot(wine,aes(quality,volatile.acidity,group=quality)) + 
+ggplot(wine, aes(quality, volatile.acidity, group = quality)) + 
   geom_boxplot() +
-  stat_summary(fun.y = mean,geom='point',shape=4) +
+  stat_summary(fun.y = mean, geom = 'point', shape = 4) +
   xlab('Quality') +
   ylab('Acetic Acid (g/L)') 
 ```
@@ -855,12 +853,12 @@ In bivariate analysis, quality shows a much stronger positive correlation with
 alcohol and negative correlation with acetic acid than other features. 
 
 ### Plot Two
-```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,alcohol,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(volatile.acidity, alcohol, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Alcohol (%)') +
   xlab('Acetic Acid (g/L)') +
   ggtitle('Quality vs Alcohol and Acetic Acid Concentration') +
@@ -878,12 +876,12 @@ than in bivariate analysis in which we correlate quality with
 alcohol and acetic acid in 2 separate plots.
 
 ### Plot Three
-```{r echo=FALSE}
-ggplot(wine,aes(volatile.acidity,sulphates,color=factor(quality))) +
-  geom_point(alpha=0.8,size=1.5) +
-  scale_color_brewer(type='div',
-                     guide = guide_legend(title='Quality',reverse=FALSE,
-                                          override.aes=list(alpha=1,size=2))) +
+```{r echo = FALSE}
+ggplot(wine, aes(volatile.acidity, sulphates, color = factor(quality))) +
+  geom_point(alpha = 0.8, size = 1.5) +
+  scale_color_brewer(type = 'div', 
+                     guide = guide_legend(title = 'Quality', reverse = FALSE, 
+                                          override.aes = list(alpha = 1, size = 2))) +
   ylab('Potassium Sulphate (g/L)') +
   xlab('Acetic Acid (g/L)') +
   ggtitle('Quality vs Acetic Acid and Potassium Sulphate Concentration') +
