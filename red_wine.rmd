@@ -36,6 +36,7 @@ chemical properties influence the quality of red wines.
 # Univariate Plots Section
 
 ```{r echo=FALSE, Univariate_Plots}
+wine <- subset(wine, select = -c(X))
 dim(wine)
 str(wine)
 summary(wine)
@@ -320,9 +321,9 @@ cor.mtest <- function(mat, conf.level = 0.95){
     return(list(p.mat, lowCI.mat, uppCI.mat))
 }
 
-M = cor(wine[,c(2:16)])
-res1 <- cor.mtest(wine[,c(2:16)],0.95)
-res2 <- cor.mtest(wine[,c(2:16)],0.99)
+M = cor(wine)
+res1 <- cor.mtest(wine,0.95)
+res2 <- cor.mtest(wine,0.99)
 ## specialized the insignificant value according to the significant level
 corrplot(M, p.mat = res1[[1]], sig.level=0.05)
 
@@ -834,36 +835,24 @@ makes sense.
 # Final Plots and Summary
 
 ### Plot One
-```{r fig.width=8, fig.height=8, echo=FALSE}
-cor.mtest <- function(mat, conf.level = 0.95){
-  mat <- as.matrix(mat)
-    n <- ncol(mat)
-    p.mat <- lowCI.mat <- uppCI.mat <- matrix(NA, n, n)
-    diag(p.mat) <- 0
-    diag(lowCI.mat) <- diag(uppCI.mat) <- 1
-    for(i in 1:(n-1)){
-        for(j in (i+1):n){
-            tmp <- cor.test(mat[,i], mat[,j], conf.level = conf.level)
-            p.mat[i,j] <- p.mat[j,i] <- tmp$p.value
-            lowCI.mat[i,j] <- lowCI.mat[j,i] <- tmp$conf.int[1]
-            uppCI.mat[i,j] <- uppCI.mat[j,i] <- tmp$conf.int[2]
-        }
-    }
-    return(list(p.mat, lowCI.mat, uppCI.mat))
-}
+```{r echo=FALSE}
+ggplot(wine,aes(quality,alcohol,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Alcohol (%)') 
 
-M = cor(wine[,c(2:16)])
-res1 <- cor.mtest(wine[,c(2:16)],0.95)
-res2 <- cor.mtest(wine[,c(2:16)],0.99)
-## specialized the insignificant value according to the significant level
-corrplot(M, p.mat = res1[[1]], sig.level=0.05)
-
+ggplot(wine,aes(quality,volatile.acidity,group=quality)) + 
+  geom_boxplot() +
+  stat_summary(fun.y = mean,geom='point',shape=4) +
+  xlab('Quality') +
+  ylab('Acetic Acid (g/L)') 
 ```
 
 ### Description One
 
-Various features are correlated with the quality of wine. Among them, alcohol 
-and acetic acid concentration have the strongest correlation with the quality.
+In bivariate analysis, quality shows a much stronger positive correlation with
+alcohol and negative correlation with acetic acid than other features. 
 
 ### Plot Two
 ```{r echo=FALSE}
@@ -884,7 +873,9 @@ acid concentration (upper left region), while most of the low quality wine
 samples have low alcohol and high acetic acid concentration (lower right 
 region). This correlation makes sense as wine with high acetic acid 
 concentration may have vinegar taste, and wine with low alcohol concentration
-may not taste like a typical wine. 
+may not taste like a typical wine. Moreover, this separation is much clearer
+than in bivariate analysis in which we correlate quality with 
+alcohol and acetic acid in 2 separate plots.
 
 ### Plot Three
 ```{r echo=FALSE}
@@ -909,11 +900,6 @@ than the second plot.
 ------
 
 # Reflection
-
-> **Tip**: Here's the final step! Reflect on the exploration you performed and
-the insights you found. What were some of the struggles that you went through?
-What went well? What was surprising? Make sure you include an insight into
-future work that could be done with the dataset.
 
 The wine dataset consists of 1599 wine samples with various quality and feature
 values. This projects gradually explores the correlation among the features
