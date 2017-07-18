@@ -917,3 +917,7 @@ visual clarity in the separation between high quality and low quality samples
 when assessing the results. Moreover, it will also be useful if we can include
 more than 3 wine experts in the test since the test is subjective. 
 
+# Reference
+The following reference was used for plotting the correlation plot with 
+significance: https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html.
+
