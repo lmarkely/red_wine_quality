@@ -266,8 +266,8 @@ There are 1599 wine samples with 11 features: tartaric acid concentration,
 acetic acid concentration, citric acid concentration, residual sugar 
 concentration, sodium chloride concentration, free sulfur dioxide concentration,
 total sulfur dioxide concentration, density, pH, potassium sulphate 
-concentration, % alcohol, and quality. All of the features except quality are 
-continuous variables. Some of the feature distributions are close to normal, 
+concentration, and % alcohol. All of the features are continuous variables. 
+Some of the feature distributions are close to normal, 
 while others are skewed to the right. 
 The wine quality is a score between 0 and 10. 
 
@@ -302,7 +302,7 @@ in linear regression later.
 # Bivariate Plots Section
 
 
-```{r CorrelationPlot, fig.width=8, fig.height=8, echo=FALSE}
+```{r fig.width=8, fig.height=8, echo=FALSE}
 cor.mtest <- function(mat, conf.level = 0.95){
   mat <- as.matrix(mat)
     n <- ncol(mat)
@@ -330,8 +330,7 @@ corrplot(M, p.mat = res1[[1]], sig.level=0.05)
 
 This figure shows correlations between the features in the dataset. The values
 correspond to the pearson correlation scores, and crosses indicate that the
-absolute value of the pearson correlation is insignificant based on p-value of 
-0.05. 
+pearson correlation is insignificant based on p-value of 0.05. 
 
 The above correlation plot shows that the quality has a strong positive 
 correlation with alcohol and a strong negative correlation with acetic acid.
@@ -352,7 +351,7 @@ Note that the obvious correlations, such as between acid concentration and pH,
 as well as the new features and the features used to derive them, are not 
 listed above.
 
-These correlations are analyzed more closely in the following plots.
+The above correlations are analyzed more closely in the following plots.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(fixed.acidity,citric.acid)) +
@@ -580,7 +579,7 @@ tapply(wine$pH,wine$quality,summary)
 ```
 
 The boxplot and summary statistics suggest that there is no strong correlation 
-between the quality and total acid concentration.
+between the quality and pH.
 
 ```{r echo=FALSE}
 ggplot(wine,aes(quality,sulphates,group=quality)) + 
@@ -815,7 +814,8 @@ that make it difficult to assess the strength of the correlation.
 Combining quality, acetic acid, and alcohol in one multivariate plot shows a 
 much better separation between high quality and low quality wine samples.
 
-Similar trend is also observed when analyzing the following multivariate plots:
+Similar strengthening relationship is also observed when analyzing the following 
+multivariate plots:
 
 1. Quality vs alcohol and potassium sulphate concentration
 2. Quality vs tartaric acid concentration and density
@@ -825,15 +825,16 @@ Similar trend is also observed when analyzing the following multivariate plots:
 
 ### Were there any interesting or surprising interactions between features?
 Initially, I was surprised that the density has a strong positive correlation 
-with tartaric acid concentration. However, I found out that tartaric acid 
-density is 1.78 g/mL, much higher than density of wine ~ 1g/L.
+with tartaric acid concentration. However, I later found out that tartaric acid 
+density is 1.78 g/mL, much higher than density of wine ~ 1g/L. So, this trend
+makes sense.
 
 ------
 
 # Final Plots and Summary
 
 ### Plot One
-```{r CorrelationPlot, fig.width=8, fig.height=8, echo=FALSE}
+```{r fig.width=8, fig.height=8, echo=FALSE}
 cor.mtest <- function(mat, conf.level = 0.95){
   mat <- as.matrix(mat)
     n <- ncol(mat)
@@ -861,8 +862,8 @@ corrplot(M, p.mat = res1[[1]], sig.level=0.05)
 
 ### Description One
 
-Various features affect the quality of wine. Among them, alcohol and acetic acid
-concentration have the strongest correlation with the quality.
+Various features are correlated with the quality of wine. Among them, alcohol 
+and acetic acid concentration have the strongest correlation with the quality.
 
 ### Plot Two
 ```{r echo=FALSE}
@@ -883,7 +884,7 @@ acid concentration (upper left region), while most of the low quality wine
 samples have low alcohol and high acetic acid concentration (lower right 
 region). This correlation makes sense as wine with high acetic acid 
 concentration may have vinegar taste, and wine with low alcohol concentration
-may not taste good. 
+may not taste like a typical wine. 
 
 ### Plot Three
 ```{r echo=FALSE}
@@ -929,5 +930,6 @@ measurement errors, or they are in fact the results of more complex
 interactions between the features that cannot be captured by 
 simply plotting 2 to 3 variables in a single plot. It may also bring more 
 visual clarity in the separation between high quality and low quality samples 
-when assessing the results. 
+when assessing the results. Moreover, it will also be useful if we can include
+more than 3 wine experts in the test since the test is subjective. 
 
