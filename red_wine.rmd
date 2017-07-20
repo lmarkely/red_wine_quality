@@ -295,8 +295,8 @@ concentration
 Did you perform any operations on the data to tidy, adjust, or change the form \
 of the data? If so, why did you do this?
 Some of the features are skewed and have 0 values. However, no transformation
-was performed as these values are reasonable and will be used as input variables
-in linear regression later.
+was performed as these values are reasonable and I would like to see the 
+correlation among the features in their original values without transformation.
 
 # Bivariate Plots Section
 
