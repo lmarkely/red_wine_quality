@@ -36,7 +36,7 @@ chemical properties influence the quality of red wines.
 # Univariate Plots Section
 
 ```{r echo = FALSE, Univariate_Plots}
-wine <- subset(wine, select = -c(X))
+#wine <- subset(wine, select = -c(X))
 dim(wine)
 str(wine)
 summary(wine)
@@ -221,7 +221,7 @@ summary(wine$total.acid)
 ```
 
 Total acid is a new feature calculated from the sum of tartaric acid, 
-acetic acid, and citric acid, concentration. The total salt distribution is 
+acetic acid, and citric acid, concentration. The total acid distribution is 
 skewed to the right. The summary statistics are provided above.
 
 ```{r echo=FALSE}
